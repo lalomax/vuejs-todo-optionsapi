@@ -4,16 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="main.css" />
   </head>
   <body>
     <div id="shopping-list">
-      <h1>{{ header || "Welcome"}}</h1>
-      <input type="text" v-on:keyup.enter="addItem" v-model="newItem" />
-      <button @click="addItem">Add</button>
-      <ul>
-        <li v-for="item in items" :key="item.id">{{item.label}}</li>
-      </ul>
+      <form class="" v-on:submit.prevent="addItem">
+        <h1>{{ header || "Welcome"}}</h1>
+        <input type="text" v-on:keyup.enter="addItem" v-model="newItem" />
+        <button>Add</button>
+        <ul>
+          <li v-for="item in items" :key="item.id">{{item.label}}</li>
+        </ul>
+      </form>
     </div>
 
     <script src="https://unpkg.com/vue@3"></script>
@@ -24,16 +26,16 @@
             header: "Shopping List!",
             newItem: "",
             items: [
-              {id:1, label:"apple"}, 
-              {id:2, label:"banana"}, 
-              {id:3, label:"orange"},
+              { id: 1, label: "apple" },
+              { id: 2, label: "banana" },
+              { id: 3, label: "orange" },
             ],
           };
         },
         methods: {
           addItem() {
             if (!this.newItem) return;
-            this.items.push({id: this.items.length + 1, label: this.newItem});
+            this.items.push({ id: this.items.length + 1, label: this.newItem });
             this.newItem = "";
           },
         },
