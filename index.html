@@ -20,10 +20,11 @@
       <form v-if="editing" class="" v-on:submit.prevent="addItem">
         <input type="text" v-on:keyup.enter="addItem" v-model="newItem" />
         <button v-bind:disabled="newItem.length <= 5" class="btn btn-primary">Add</button>
-        <ul>
-          <li v-for="item in items" :key="item.id">{{item.label}}</li>
-        </ul>
+        
       </form>
+      <ul>
+          <li v-for="item in items" :key="item.id" v-bind:class="{strikeout : item.purchased}" v-on:click="togglePurchased(item)">{{item.label}}</li>
+        </ul>
       <p v-if="!items.length">Yu've bought all your items</p>
     </div>
 
@@ -35,7 +36,11 @@
             header: "Shopping List!",
             editing: false,
             newItem: "",
-            items: [],
+            items: [
+              { id: 1, label: "Milk", purchased: false },
+              { id: 2, label: "Eggs", purchased: false },
+              { id: 3, label: "Bread", purchased: true },
+            ],
           };
         },
         methods: {
@@ -47,6 +52,9 @@
           doEdit(editing) {
             this.editing = editing;
             this.newItem = "";
+          },
+          togglePurchased(item) {
+            item.purchased = !item.purchased;
           },
         },
       }).mount("#shopping-list");
