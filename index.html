@@ -8,15 +8,23 @@
   </head>
   <body>
     <div id="shopping-list">
-      <form class="" v-on:submit.prevent="addItem">
+      <div class="header">
         <h1>{{ header || "Welcome"}}</h1>
+        <button v-if="editing" @click="doEdit(false)" class="btn btn-cancel">
+          Cancel
+        </button>
+        <button v-else @click="doEdit(true)" class="btn btn-primary">
+          Add Item
+        </button>
+      </div>
+      <form v-if="editing" class="" v-on:submit.prevent="addItem">
         <input type="text" v-on:keyup.enter="addItem" v-model="newItem" />
-        <button>Add</button>
+        <button v-bind:disabled="newItem.length <= 5" class="btn btn-primary">Add</button>
         <ul>
           <li v-for="item in items" :key="item.id">{{item.label}}</li>
         </ul>
-        <p v-if="!items.length">Yu've bought all your items</p>
       </form>
+      <p v-if="!items.length">Yu've bought all your items</p>
     </div>
 
     <script src="https://unpkg.com/vue@3"></script>
@@ -25,16 +33,19 @@
         data() {
           return {
             header: "Shopping List!",
+            editing: false,
             newItem: "",
-            items: [
-        
-            ],
+            items: [],
           };
         },
         methods: {
           addItem() {
             if (!this.newItem) return;
             this.items.push({ id: this.items.length + 1, label: this.newItem });
+            this.newItem = "";
+          },
+          doEdit(editing) {
+            this.editing = editing;
             this.newItem = "";
           },
         },
