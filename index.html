@@ -18,7 +18,8 @@
         </button>
       </div>
       <form v-if="editing" class="add-item-form" v-on:submit.prevent="addItem">
-        <input type="text" v-on:keyup.enter="addItem" v-model="newItem" />
+        <input type="text" v-on:keyup.enter="addItem" v-model="newItem" placeholder="Add an item" />
+        <p class="counter">{{ charactercount }}/200</p>
         <button v-bind:disabled="newItem.length <= 5" class="btn btn-primary">Add</button>
         
       </form>
@@ -42,6 +43,11 @@
               { id: 3, label: "Bread", purchased: true },
             ],
           };
+        },
+        computed: {
+          charactercount() {
+            return this.newItem.length;
+          },
         },
         methods: {
           addItem() {
